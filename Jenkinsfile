@@ -1,29 +1,29 @@
 node('master') 
 {
-   stage('ContinuousDownload') 
+   stage('Continuous Download') 
    {
-      git 'https://github.com/intelliqittrainings/maven.git'
+      git 'https://github.com/suri-chund/maven.git'
    }
-   stage('ContinuousBuild')
+   stage('Continuous Build')
    {
        sh label: '', script: 'mvn package'
    }
    stage('ContinuousDeployment')
    {
-       sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.0.103:/var/lib/tomcat8/webapps/testapp.war'
+       sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/A1/webapp/target/webapp.war ubuntu@172.31.19.160:/var/lib/tomcat8/webapps/testapp.war'
    }
-   stage('ContinuousTesting')
+   stage('Continuous Testing')
    {
        git 'https://github.com/selenium-saikrishna/FunctionalTesting.git'
    
-       sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/ScriptedPipeline/testing.jar'
+       sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/A1/testing.jar'
        
    }
-   stage('ContinuousDelivery')
+   stage('Continuous Delivery')
    {
        input message: 'Wating for Approval from the DM!', submitter: 'srinivas'
        
-       sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.10.26:/var/lib/tomcat8/webapps/prodapp.war'
+       sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/A1/webapp/target/webapp.war ubuntu@172.31.27.95:/var/lib/tomcat8/webapps/prodapp.war'
    }
    
    
